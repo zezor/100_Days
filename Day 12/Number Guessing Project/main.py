@@ -33,23 +33,26 @@ guess_answer = 0
 # Attempt function
 TURNS =  set_difficulty()
 
-print(TURNS)
-
 while guess_answer != com_guess:
     guess_answer = int(input("Make a guess: "))
 
-    # compare guess and computer guess
-    def compare(com_answer, user_answer):
+# compare guess and computer guess
+    def compare(com_answer, user_answer, turns):
+
         if user_answer > com_answer:
+            turns -= 1
             print("Too High")
+            print(f"You have {turns} attempts remaining to guess the number")
 
         elif user_answer < com_answer:
+            turns -= 1
             print("Too Low")
+            print(f"You have {turns} attempts remaining to guess the number")
 
         else:
             print(   f"You got it! The answer was {com_guess}")
 
-    compare(com_answer= com_guess,user_answer=guess_answer)
+    compare(com_answer= com_guess,user_answer=guess_answer, turns=set_difficulty())
 
 
 
