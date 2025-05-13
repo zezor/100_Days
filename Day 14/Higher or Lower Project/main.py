@@ -2,10 +2,10 @@
 import random
 
 ## import game_data
-import game_data
+from game_data import data
 
 # ## import art
-import art
+from art import logo, vs
 
 # ## Random choose from the data A
 # random_choice_a = random.randint(0,30)
@@ -43,22 +43,68 @@ import art
 #
 # A = input("Your Answer: ")
 
+
+
+
+
+
 # Display Art
 
-# Generate random account from the game data
+def check(guess, a_followers, b_followers):
+    # if a_followers > b_followers and guess == "a":
+    #     return  True
+    # elif a_followers > b_followers and guess != "a":
+    #     return False
+    # elif b_followers > a_followers and guess == "b":
+    #     return True
+    # elif a_followers > b_followers and guess != "b":
+    #     return False
+    if a_followers > b_followers:
+        return guess == "a"
+    elif b_followers > a_followers:
+        return  guess == "b"
 
 # Format the game data into printable format
+def account_format(account):
+    account_name = account["name"]
+    account_descr = account["description"]
+    account_country = account["country"]
+    return f"{account_name} a {account_descr} from {account_country}"
 
-# Ask user for a guess
+score = 0
+game_should_continue = True
+account_b = random.choice(data)
 
-# # Check if user is correct
-##-- Get follower count of each account
-##-- Use if statement to check if the user is correct
+while game_should_continue:
+    print("\n" * 20)
 
-# Give user feedback on their guess
+    print(logo)
+    # Generate random account from the game data
+    account_a = account_b
+    account_b = random.choice(data)
 
-# Score keeping
+    if account_a == account_b:
+        account_b = random.choice(data)
 
-# Make the game repeatable
+    print(f"Compare A: {account_format(account_a)}")
 
-# Making account at B become account at position A
+    print(vs)
+
+    print(f"Against B: {account_format(account_b)}")
+
+    # Ask user for a guess
+    guess = input("Who has more followers? Type A or B: ").lower()
+    # # Check if user is correct
+    ##-- Get follower count of each account
+    a_follower_account = account_a["follower_count"]
+    b_follower_account = account_b["follower_count"]
+
+    is_correct = check(guess= guess, a_followers=a_follower_account, b_followers=b_follower_account)
+    if is_correct:
+         score += 1
+         print(f"You are right: Current Score {score}")
+    else:
+
+         print(f" Sorry!! That's wrong: Final score {score}")
+         game_should_continue = False
+
