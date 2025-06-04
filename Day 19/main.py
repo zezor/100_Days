@@ -7,6 +7,8 @@ from turtle import Turtle, Screen
 is_race_on = False
 my_screen = Screen()
 my_screen.setup(500, 400)
+my_screen.bgcolor("lavender")
+my_screen.title("Turtle Race")
 user_bet = my_screen.textinput(title= "Make your bet", prompt="Which turtle will win the race? Enter a color: " )
 colors = ["red", "green", "blue", "black", "yellow", "pink"]
 y_position = [-70, -40, -10, 20, 50, 80 ]
