@@ -1,6 +1,7 @@
 from turtle import  Screen
 from snake import Snake
 from food import Food
+from score_board import Score
 
 import time
 
@@ -12,6 +13,8 @@ screen.tracer(0)
 
 snake = Snake()
 food = Food()
+score = Score()
+
 #anaconda = Anaconda() #trying out anaconda class from inheritance
 screen.listen()
 screen.onkey(snake.up, "Up")
