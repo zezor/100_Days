@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip  #For copping item to the clip board
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
@@ -30,23 +31,53 @@ def save_password():
     website= website_name_entry.get()  #getting hold of the entry
     email = email_entry.get()
     password = password_entry.get()
+    new_data = {website:
+                    {"email:":email,
+                     "password:":password
+                     }
+                }
 
 
     if len(website) == 0 or len(email) == 0 or len(password) ==0:
         messagebox.showerror(title="Oops!", message="Please don't leave any field empty!")
     else:
+        try:
 
-         #creating a dialogue or pop up box
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} "
-                                                      f"\n Password: {password} \n Is ok to save?")
+            with open("data.json", "r") as data_file:
+                #json.dump(new_data, data_file, indent=4) # writing to json file
+                #Reading old data
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            # Updating old data with new data
+            data.update(new_data)
 
-        if is_ok:
-            with open("data.text", "a") as file:
-                        file.write(f"{website} / {email} / {password} \n")
-            website_name_entry.delete(0, END) # to clear entry box when add button is clicked
-            #email_entry.delete(0, END)
+            with open("data.json", "w") as data_file:
+                # saving updated data
+                json.dump(data, data_file, indent=4)
+
+
+            with open("data.json", "w") as data_file:
+                #saving updated data
+                json.dump(data, data_file, indent=4)
+        finally:
+          #file.write(f"{website} / {email} / {password} \n")
+            website_name_entry.delete(0, END)  # to clear entry box when add button is clicked
+            email_entry.delete(0, END)
             password_entry.delete(0, END)
 
+
+        # is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} "
+        #                                               f"\n Password: {password} \n Is ok to save?")
+        #
+        # if is_ok:
+        #     with open("data.text", "a") as file:
+        #                 file.write(f"{website} / {email} / {password} \n")
+        #     website_name_entry.delete(0, END) # to clear entry box when add button is clicked
+        #     #email_entry.delete(0, END)
+        #     password_entry.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
